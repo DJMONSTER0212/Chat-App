@@ -20,4 +20,4 @@ app.get("/api/chat/:id",async (req,res)=>{
     res.send(singlechat)
 });
 
-app.listen(process.env.PORT,console.log("Server Running on localhost:5000"));
+app.listen(5000,console.log("Server Running on localhost:5000"));
