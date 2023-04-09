@@ -3,7 +3,8 @@ const chats  = require('./data/data');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes')
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
@@ -24,6 +25,8 @@ app.get("/api/chat/:id",async (req,res)=>{
     res.send(singlechat)
 });
 
+app.use(notFound);
+app.use(errorHandler);
 
 app.use('/api/user',userRoutes)
 
