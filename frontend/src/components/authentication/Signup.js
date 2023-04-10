@@ -6,7 +6,9 @@ import { useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 const Signup = () => {
-    
+    const instance = axios.create({
+        baseURL: "http://localhost:5000",
+    });
     const [show, setShow] = useState(false);
     const [name, setName] = useState(""); 
     const [email, setemail] = useState("");
@@ -59,7 +61,8 @@ const Signup = () => {
 
         }
     };
-    const submitHandler =async ()=>{
+    const submitHandler =async (e)=>{
+        e.preventDefault();
         setLoading(true);
         if(!name||!email||!password||!confirmpassword){
             toast({
@@ -86,25 +89,27 @@ const Signup = () => {
             return;
         }
         try {
-            // const config = {
-            //     headers:{
-            //         "Content-type":"application/json",
-            //     },
-            // };
+            const config = {
+                headers:{
+                    "Content-type":"application/json",
+                },
+            };
 
-            // const { data } = await axios.post('/api/user',{name,email,password,pic},config);
-            const response = await fetch(`/api/user`, {
-                method: "post", // *GET, POST, PUT, DELETE, etc.
-                mode: "no-cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
-                headers: {
-                    "Content-Type": "application/json",
-                    },
-                body: JSON.stringify({ name, email, password,pic }),// body data type must match "Content-Type" header
-            });
-            const json = await response.json()
-            console.log(json);
+            const { data } = await axios.post('/api/user',{name,email,password,pic},config);
+            // console.log(name,email,password,pic)
+            // const response = await fetch(`http://localhost:5000/api/user`, {
+            //     method: "POST", // *GET, POST, PUT, DELETE, etc.
+            //     mode: "no-cors", // no-cors, *cors, same-origin
+            //     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            //     credentials: "same-origin", // include, *same-origin, omit
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         },
+            //     body: JSON.stringify({name, email, password,pic}),// body data type must match "Content-Type" header
+            // });
+            // const json = await response.json()
+            // console.log(json);
+            // console.log(data);
             toast({
                 title: 'Registeration Successfull',
                 description: "We have successfully registered your account",
@@ -113,7 +118,7 @@ const Signup = () => {
                 isClosable: true,
                 position: 'bottom',
             });
-            localStorage.setItem('userInfo',JSON.stringify(json));
+            localStorage.setItem('userInfo',JSON.stringify(data));
             setLoading(false);
             history.push('/chats');
         } catch (error) {
