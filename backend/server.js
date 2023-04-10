@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors')
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes')
+const chatRoutes = require('./routes/chatRoutes')
 const bodyParser = require('body-parser');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 const app = express();
@@ -18,16 +19,18 @@ app.get('/',(req,res)=>{
 })
 
 
-app.get('/api/chat',(req,res)=>{
-    res.send(chats)
-})
+// app.get('/api/chat',(req,res)=>{
+//     res.send(chats)
+// })
 
-app.get("/api/chat/:id",async (req,res)=>{
-    const singlechat = await chats.find((c)=>c._id===req.params.id);
-    res.send(singlechat)
-});
+// app.get("/api/chat/:id",async (req,res)=>{
+//     const singlechat = await chats.find((c)=>c._id===req.params.id);
+//     res.send(singlechat)
+// });
 
-app.use("/api/user",userRoutes)
+app.use("/api/user",userRoutes);
+app.use('/api/chat',chatRoutes);
+
 app.use(notFound);
 app.use(errorHandler);
 
