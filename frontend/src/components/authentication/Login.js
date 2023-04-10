@@ -1,16 +1,68 @@
 import React from 'react'
-import { Button, VStack } from '@chakra-ui/react'
+import { Button, Toast, VStack } from '@chakra-ui/react'
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input'
 import { useState } from 'react'
 import { FormControl, FormLabel } from '@chakra-ui/form-control'
-
+import { useToast } from '@chakra-ui/react'
+import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 const Login = () => {
     const [show, setShow] = useState(false);
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const handleClick = () => setShow(!show)
-    const postDetails = (pics) => { };
-    const submitHandler = () => { };
+    const [loading, setLoading] = useState(false)
+    const toast = useToast()
+    const history = useHistory()
+    const submitHandler = async () => { 
+        setLoading(true);
+        if(!email||!password){
+            Toast({
+                title: 'Please Fill all the Fields',
+                description: "You have to fill the required fields",
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+                position: 'bottom',
+            });
+            setLoading(false);
+            return;
+        }
+        try {
+            const config = {
+                headers:{
+                    "Content-Type":"application/json"
+                },
+            };
+            const {data} = await axios.post(
+                "/api/user/login",
+                {email,password},
+                config
+            );
+            toast({
+                title: 'Login Successfull',
+                description: "You have Successfully logged IN",
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'bottom',
+            });
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            setLoading(false);
+            history.push('/chats');
+        } catch (error) {
+            toast({
+                title: 'Error Occured',
+                description: "error hai",
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+                position: 'bottom',
+            });
+            setLoading(false)
+        }
+
+    };
     return (
         <VStack spacing={"5px"} >
             <FormControl id='email' isRequired>
@@ -42,6 +94,7 @@ const Login = () => {
                 width={"100%"}
                 style={{ marginTop: 15 }}
                 onClick={submitHandler}
+                isLoading = {loading}
             >
                 Login
             </Button>
@@ -49,6 +102,7 @@ const Login = () => {
                 variant={'solid'}
                 colorScheme='red'
                 width={"100%"}
+                isLoading={loading}
                 onClick={()=>{
                     setemail("guest@example.com")
                     setpassword('123456')

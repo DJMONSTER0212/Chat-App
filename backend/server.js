@@ -28,8 +28,8 @@ app.get("/api/chat/:id",async (req,res)=>{
 });
 
 app.use("/api/user",userRoutes)
-// app.use(notFound);
-// app.use(errorHandler);
+app.use(notFound);
+app.use(errorHandler);
 
 
 app.listen(5000,console.log("Server Running on localhost:5000"));
