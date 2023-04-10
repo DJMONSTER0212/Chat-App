@@ -70,6 +70,7 @@ const Login = () => {
                 <Input
                     placeholder='Enter your Email'
                     onChange={(e) => setemail(e.target.value)}
+                    value={email}
                 />
             </FormControl>
             <FormControl id='password' isRequired>
@@ -79,6 +80,7 @@ const Login = () => {
                         type={show ? 'text' : 'password'}
                         placeholder='Enter your password'
                         onChange={(e) => setpassword(e.target.value)}
+                        value={password}
                     />
                     <InputRightElement
                         width={"4.5rem"}
