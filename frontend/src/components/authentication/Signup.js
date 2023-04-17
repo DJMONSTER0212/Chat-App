@@ -118,6 +118,7 @@ const Signup = () => {
                 isClosable: true,
                 position: 'bottom',
             });
+            console.log(data);
             localStorage.setItem('userInfo',JSON.stringify(data));
             setLoading(false);
             history.push('/chats');
