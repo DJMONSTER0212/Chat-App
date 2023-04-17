@@ -1,6 +1,6 @@
 const express = require('express');
 const { protect } = require('../middleware/authMiddleware');
-const { accessChat, fetchChats } = require('../controlers/chatControllers');
+const { accessChat, fetchChats, createGroupChat } = require('../controlers/chatControllers');
 
 const router = express.Router();
 
