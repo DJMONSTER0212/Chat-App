@@ -1,22 +1,28 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useEffect } from 'react'
+import { ChatState } from '../Context/ChatProvider'
+import {Box} from "@chakra-ui/layout"
+import SideDrawer from "../components/miscellanous/SideDrawer";
+import Mychats from "../components/Mychats";
+import ChatBox from "../components/ChatBox";
 const ChatPage = () => {
-    const [chats,setChats] = useState([]);
-    const fetchChats = async ()=>{
-        const {data} = await axios.get('/api/chat');
-            
-        console.log(data)
-        setChats(data);
-    } 
-    useEffect(()=>{   // it is a hook in react which runs when the component is rendered for the first time 
-        fetchChats();
-    },[])
+  const {user}= ChatState()
+ 
 
   return (
-    <div>
-      chat wala page
-      {chats.map(chat=><div key={chat._id}>{chat.chatName}</div>)}
+    <div style={{width:'100%'}}>
+      {user &&<SideDrawer/>}
+      <Box
+      display="flex"
+      justifyContent="space-between"
+      w='100%'
+      h='91.5vh'
+      p='10px'
+      >
+        {user && <Mychats/>}
+        {user && <ChatBox/>}
+      </Box>
     </div>
   )
 }
