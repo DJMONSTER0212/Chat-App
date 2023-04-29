@@ -6,6 +6,7 @@ const ProfileModel = ({user,children}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
+    {user.pic}
       {
         children?(<span onClick={onOpen}>{children}</span>):(
             <IconButton
@@ -14,9 +15,9 @@ const ProfileModel = ({user,children}) => {
                 onClick={onOpen}
             />
         )
-          }<Modal isOpen={isOpen} onClose={onClose}>
+          }<Modal size={'lg'} isOpen={isOpen} onClose={onClose} isCentered>
               <ModalOverlay />
-              <ModalContent>
+              <ModalContent h={'410px'}>
                   <ModalHeader
                     fontSize={"40px"}
                     fontFamily={"Work sans"}
@@ -24,18 +25,23 @@ const ProfileModel = ({user,children}) => {
                     justifyContent={'center' }
                   >{user.name}</ModalHeader>
                   <ModalCloseButton />
-                  <ModalBody>
+                  <ModalBody
+                    display={'flex'}
+                    flexDir={'column'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                  >
                     <Image
                         borderRadius={"full"}
                         boxSize={"150px"}
-                        src={user.pic}
+                        src="https://wallpaper.dog/large/20485824.jpg"
                         alt={user.name}
                     />
                     <Text
                         fontSize={{base:"28px", md:"30px"}}
                         fontFamily={"Work sans"}
                     >
-
+                      Email : {user.email}
                     </Text>
                   </ModalBody>
 
