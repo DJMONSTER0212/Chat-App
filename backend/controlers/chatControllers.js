@@ -2,16 +2,18 @@ const asyncHandler = require('express-async-handler')
 const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
 const accessChat =  asyncHandler(async (req,res)=>{
-    const {userId} = req.body;
-    if(!userId){
+    const {UserId} = req.body;
+    console.log(UserId)
+    if(!UserId){
         console.log("UserId param not sent with request");
         return res.sendStatus(400);
     }
+    console.log("sdfi")
     var isChat = await Chat.find({
         isGroupChat:false,
         $and:[
             {users:{$elemMatch:{$eq:req.user._id}}},   // user that is logged in
-            {users:{$elemMatch:{$eq:userId}}},   // userId that we have sent
+            {users:{$elemMatch:{$eq:UserId}}},   // UserId that we have sent
             ]
     }).populate("users", "-password")
         .populate("latestMessage");
@@ -27,7 +29,7 @@ const accessChat =  asyncHandler(async (req,res)=>{
         var chatData = {
             chatName: "sender",
             isGroupChat:false,
-            users:[req.user._id,userId],
+            users:[req.user._id,UserId],
         };
 
         try {
@@ -112,11 +114,11 @@ const renameGroup = asyncHandler(async(req,res)=>{
 });
 
 const addToGroup = asyncHandler(async(req,res)=>{
-    const {chatId,userId} = req.body;
+    const {chatId,UserId} = req.body;
 
     const added = await Chat.findByIdAndUpdate(
         chatId,
-        {$push:{users:userId}},
+        {$push:{users:UserId}},
         {new:true}
     )
     .populate("users","-password")
@@ -131,11 +133,11 @@ const addToGroup = asyncHandler(async(req,res)=>{
 })
 
 const removeFromGroup = asyncHandler(async (req, res) => {
-    const { chatId, userId } = req.body;
+    const { chatId, UserId } = req.body;
 
     const removed = await Chat.findByIdAndUpdate(
         chatId,
-        { $pull: { users: userId } },
+        { $pull: { users: UserId } },
         { new: true }
     )
         .populate("users", "-password")

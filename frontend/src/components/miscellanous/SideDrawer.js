@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Avatar, Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Text, Tooltip, useDisclosure, useToast} from '@chakra-ui/react'
+import {Avatar, Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Input, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Spinner, Text, Tooltip, useDisclosure, useToast} from '@chakra-ui/react'
 import {BellIcon, ChevronDownIcon} from '@chakra-ui/icons'
 import { ChatState } from '../../Context/ChatProvider';
 import ProfileModel from './ProfileModel';
@@ -7,14 +7,15 @@ import { useHistory } from 'react-router-dom';
 import ChatLoading from '../ChatLoading';
 import axios from 'axios'
 import UserListItem from '../useravatar/UserListItem';
-
+axios.defaults.baseURL = 'http://localhost:5000';
 const SideDrawer = () => {
   const [search,setSearch] = useState("");
   const [searchResult,setSearchResult] = useState([]);
   const [loading,setLoading] = useState(false)
   const [loadingChat,setLoadingChat] = useState()
+
   const toast = useToast();
-  const { user } = ChatState();
+  const { user, setSelectedChat, chats, setChats } = ChatState();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const handleSearch = async ()=>{
@@ -54,8 +55,37 @@ const SideDrawer = () => {
     }
   };
 
-  const accessChat = (UserId)=>{
+  const accessChat = async(UserId)=>{
+    try {
+      setLoadingChat(true)
 
+      const config = {
+        headers: {
+          "Content-type":"application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+
+      };  
+      console.log({UserId})
+      const {data} = await axios.post('/api/chat',{UserId},config); 
+      console.log(data);
+      if(!chats.find((c)=>c._id===data._id)) setChats([data, ...chats]);
+      setSelectedChat(data);
+      setLoadingChat(false); 
+      onClose();
+
+    } catch (error) {
+      toast({
+        title: "Error Fetching the chat ",
+        description: error.message,
+        isClosable: true,
+        status: "error",
+        duration: 5000,
+        position: "bottom-left"
+      });
+      setLoading(false);
+      return;
+    }
   }
 
   const logoutHandler=()=>{
@@ -130,6 +160,7 @@ const SideDrawer = () => {
               />
             ))
           )}
+          {loadingChat&& <Spinner ml={"auto"} display={"flex"}/>}
         </DrawerBody>
       </DrawerContent>
      </Drawer>
