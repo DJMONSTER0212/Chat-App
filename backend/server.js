@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors')
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes')
+const messageRoutes = require('./routes/messageRoutes')
 const chatRoutes = require('./routes/chatRoutes')
 const bodyParser = require('body-parser');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
@@ -30,9 +31,10 @@ app.get('/',(req,res)=>{
 
 app.use("/api/user",userRoutes);
 app.use('/api/chat',chatRoutes);
+app.use('/api/message',messageRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
 
 
-app.listen(5000,console.log("Server Running on localhost:5000"));
+app.listen(process.env.PORT||5000,console.log("Server Running on localhost:5000"));
