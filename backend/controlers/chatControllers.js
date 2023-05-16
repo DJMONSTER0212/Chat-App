@@ -114,11 +114,11 @@ const renameGroup = asyncHandler(async(req,res)=>{
 });
 
 const addToGroup = asyncHandler(async(req,res)=>{
-    const {chatId,UserId} = req.body;
+    const {chatId,userId} = req.body;
 
     const added = await Chat.findByIdAndUpdate(
         chatId,
-        {$push:{users:UserId}},
+        {$push:{users:userId}},
         {new:true}
     )
     .populate("users","-password")
@@ -133,11 +133,11 @@ const addToGroup = asyncHandler(async(req,res)=>{
 })
 
 const removeFromGroup = asyncHandler(async (req, res) => {
-    const { chatId, UserId } = req.body;
+    const { chatId, userId } = req.body;
 
     const removed = await Chat.findByIdAndUpdate(
         chatId,
-        { $pull: { users: UserId } },
+        { $pull: { users: userId } },
         { new: true }
     )
         .populate("users", "-password")
