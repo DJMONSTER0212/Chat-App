@@ -7,6 +7,9 @@ import { useHistory } from 'react-router-dom';
 import ChatLoading from '../ChatLoading';
 import axios from 'axios'
 import UserListItem from '../useravatar/UserListItem';
+import { getSender } from '../../config/ChatLogics';
+import NotificationBadge from 'react-notification-badge';
+import { Effect } from 'react-notification-badge';
 axios.defaults.baseURL = 'http://localhost:5000';
 const SideDrawer = () => {
   const [search,setSearch] = useState("");
@@ -15,7 +18,7 @@ const SideDrawer = () => {
   const [loadingChat,setLoadingChat] = useState()
 
   const toast = useToast();
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const { user, setSelectedChat, chats, setChats, notification, setNotification } = ChatState();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const handleSearch = async ()=>{
@@ -115,9 +118,23 @@ const SideDrawer = () => {
         <div>
           <Menu>
             <MenuButton p={1} >
+              <NotificationBadge
+                count={notification.length}
+                effect={Effect.SCALE}
+              />
               <BellIcon fontSize={'2xl'} m={1}/>
             </MenuButton>
-            {/* <MenuList></MenuList> */}
+            <MenuList pl={2}>
+              {!notification.length&&"No new messages"}
+              {notification.map(notif=>(
+                <MenuItem key={notif._id} onClick={()=>{
+                  setSelectedChat(notif.chat);
+                  setNotification(notification.filter((n)=>n!==notif));
+                }}>
+                  {notif.chat.isGoroupChat?`New Message in ${notif.chat.chatName}`:`New Message from ${getSender(user,notif.chat.users)}`}
+                </MenuItem>
+              ))}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon/>} >
