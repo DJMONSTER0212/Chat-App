@@ -1,6 +1,8 @@
 const express = require('express');
 const chats  = require('./data/data');
-const dotenv = require('dotenv'); 
+const path = require("path")
+// const dotenv = require('dotenv');
+require("dotenv").config(); 
 const cors = require('cors')
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes')
@@ -13,13 +15,11 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(express.json()); //to accept json data
-dotenv.config();
+// dotenv.config();
 connectDB();
-app.get('/',(req,res)=>{
-    res.send('app is running')
-})
 
 
+// console.log(process.env.PORT)
 // app.get('/api/chat',(req,res)=>{
 //     res.send(chats)
 // })
@@ -33,6 +33,24 @@ app.use("/api/user",userRoutes);
 app.use('/api/chat',chatRoutes);
 app.use('/api/message',messageRoutes);
 
+// ----------Deployment
+// console.log(process.env.NODE_ENV)
+const __dirname1 = path.resolve()
+// console.log(process.env.MONGO_URI)
+// console.log(process.env.NODE_ENV === "production")
+// console.log(process.env.NODE_ENV)
+if(process.env.NODE_ENV==="production"){
+    // console.log("hi")
+    app.use(express.static(path.join(__dirname1,'/frontend/build')))
+    app.get('*',(req,res)=>{
+        res.sendFile(path.resolve(__dirname1,"frontend","build","index.html"));
+    })
+}else {
+    app.get('/', (req, res) => {
+        res.send('app is running')
+    })
+}
+// ----------------
 app.use(notFound);
 app.use(errorHandler);
 
