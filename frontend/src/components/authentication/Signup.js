@@ -5,10 +5,11 @@ import { FormControl, FormLabel } from '@chakra-ui/form-control'
 import { useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
+axios.defaults.baseURL = 'https://backend-chatapp-f9f8.onrender.com';
 const Signup = () => {
-    const instance = axios.create({
-        baseURL: "http://localhost:5000",
-    });
+    // const instance = axios.create({
+    //     baseURL: "https://chatappbackend2.onrender.com",
+    // });
     const [show, setShow] = useState(false);
     const [name, setName] = useState(""); 
     const [email, setemail] = useState("");

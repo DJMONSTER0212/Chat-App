@@ -5,7 +5,7 @@ import { ChatState } from '../../Context/ChatProvider'
 import UserBadgeItem from '../useravatar/UserBadgeItem'
 import axios from 'axios'
 import UserListItem from '../useravatar/UserListItem'
-
+axios.defaults.baseURL = 'https://backend-chatapp-f9f8.onrender.com';
 const UpdateGroupChatModal = ({fetchAgain,setFetchAgain , fetchMessages}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [groupChatName,setGroupChatName] = useState();

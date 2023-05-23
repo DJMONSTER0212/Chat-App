@@ -6,6 +6,7 @@ import {Box} from "@chakra-ui/layout"
 import SideDrawer from "../components/miscellanous/SideDrawer";
 import Mychats from "../components/Mychats";
 import ChatBox from "../components/ChatBox";
+axios.defaults.baseURL = 'https://backend-chatapp-f9f8.onrender.com';
 const ChatPage = () => {
   const {user}= ChatState()
   const [fetchAgain,setFetchAgain] = useState(false);
@@ -20,7 +21,7 @@ const ChatPage = () => {
       h='91.5vh'
       p='10px'
       >
-        {user && <Mychats fetchAgain={fetchAgain}/>}
+        {user && <Mychats fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />}
         {user && <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain}/>}
       </Box>
     </div>

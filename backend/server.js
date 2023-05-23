@@ -36,9 +36,10 @@ app.use('/api/message',messageRoutes);
 // ----------Deployment
 // console.log(process.env.NODE_ENV)
 const __dirname1 = path.resolve()
-// console.log(process.env.MONGO_URI)
+console.log(process.env.MONGO_URI)
 // console.log(process.env.NODE_ENV === "production")
 // console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_ENV === "production")
 if(process.env.NODE_ENV==="production"){
     // console.log("hi")
     app.use(express.static(path.join(__dirname1,'/frontend/build')))
@@ -55,7 +56,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 
-const server = app.listen(process.env.PORT||5000,console.log("Server Running on localhost:5000"));
+const server = app.listen(process.env.BASE_URL||5000,console.log("Server Running on localhost:5000"));
 const io = require('socket.io')(server,{
     pingTimeout:60000,     // amout of time it will wait while being inactive 
     cors:{

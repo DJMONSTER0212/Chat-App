@@ -6,6 +6,8 @@ import { AddIcon } from '@chakra-ui/icons';
 import ChatLoading from './ChatLoading';
 import { getSender } from '../config/ChatLogics';
 import GroupChatModal from './miscellanous/GroupChatModal';
+axios.defaults.baseURL = 'https://backend-chatapp-f9f8.onrender.com';
+
 const Mychats = ({fetchAgain}) => {
   const [loggedUser,setLoggedUser] = useState();
   const { user, selectedChat,setSelectedChat, chats, setChats } = ChatState();

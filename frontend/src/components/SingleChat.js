@@ -11,9 +11,10 @@ import ScrollableChat from './ScrollableChat';
 import io from "socket.io-client"
 import Lottie from "react-lottie"
 import loadingEffect from "../animation/loading_effect.json"
-const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = 'https://backend-chatapp-f9f8.onrender.com';
 var socket,selectedChatCompare;
-
+// axios.defaults.baseURL = 'https://backend-chatapp-f9f8.onrender.com';
+axios.defaults.baseURL = 'https://backend-chatapp-f9f8.onrender.com';
 
 const SingleChat = ({fetchAgain,setFetchAgain}) => {
     const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState();

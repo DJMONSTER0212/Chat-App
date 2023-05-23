@@ -10,7 +10,8 @@ import UserListItem from '../useravatar/UserListItem';
 import { getSender } from '../../config/ChatLogics';
 import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge';
-axios.defaults.baseURL = 'http://localhost:5000';
+// axios.defaults.baseURL = 'https://chatappbackend2.onrender.com';
+axios.defaults.baseURL = 'https://backend-chatapp-f9f8.onrender.com';
 const SideDrawer = () => {
   const [search,setSearch] = useState("");
   const [searchResult,setSearchResult] = useState([]);
