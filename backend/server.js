@@ -60,9 +60,10 @@ const server = app.listen(process.env.BASE_URL||5000,console.log("Server Running
 const io = require('socket.io')(server,{
     pingTimeout:60000,     // amout of time it will wait while being inactive 
     cors:{
-        origin:"http://localhost:3000",
+        origins: '*:*',
     }
 });
+// io.origins('*:*');
 
 io.on("connection",(socket)=>{
     console.log("connected to scoket.io")
