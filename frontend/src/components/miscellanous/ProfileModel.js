@@ -34,7 +34,7 @@ const ProfileModel = ({user,children}) => {
                     <Image
                         borderRadius={"full"}
                         boxSize={"150px"}
-                        src="https://wallpaper.dog/large/20485824.jpg"
+              src="https://www.pixel4k.com/wp-content/uploads/2020/08/2020-goku-anime_1596921592.jpg"
                         alt={user.name}
                     />
                     <Text

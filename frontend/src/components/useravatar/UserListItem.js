@@ -27,7 +27,7 @@ const UserListItem = ({ user,handleFunction}) => {
         size={"sm"}
         cursor={'pointer'}
         name={user.name}
-          src="https://c4.wallpaperflare.com/wallpaper/695/929/222/women-curvy-lana-rhoades-blue-eyes-wallpaper-preview.jpg"
+          src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png"
         />
         <Box>
           <Text>{user.name}</Text>
