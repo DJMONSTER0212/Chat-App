@@ -3,7 +3,7 @@
 .App{
   min-height: 100vh;
   display: flex;
-  background-image: url("https: //www.pixel4k.com/wp-content/uploads/2020/08/2020-goku-anime_1596921592.jpg");
+  background-image: url("../public/2020-goku-anime_1596921592.jpg");
   background-size: cover;
 }
 

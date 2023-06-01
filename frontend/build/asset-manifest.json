@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.39da8e98.css",
+    "main.css": "/static/css/main.84486331.css",
     "main.js": "/static/js/main.c4aaec40.js",
     "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
+    "static/media/2020-goku-anime_1596921592.jpg": "/static/media/2020-goku-anime_1596921592.bb4caac557fdaaebaa15.jpg",
     "index.html": "/index.html",
-    "main.39da8e98.css.map": "/static/css/main.39da8e98.css.map",
+    "main.84486331.css.map": "/static/css/main.84486331.css.map",
     "main.c4aaec40.js.map": "/static/js/main.c4aaec40.js.map",
     "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.39da8e98.css",
+    "static/css/main.84486331.css",
     "static/js/main.c4aaec40.js"
   ]
 }
